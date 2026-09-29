@@ -99,15 +99,18 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+
     $("#username").empty();
     $(".revenue-amt").empty();
     $("#customer-num").empty();
     $("#orders-amt").empty();
     $("#issues-amt").empty();
-    
-
-
-       
-
+    $("#salesTableBody").empty();
+    $("#activity-list").empty();
+    $("#customerTableBody").empty();
+    $("#system-status-list").empty();
+    $("#notifications-list").empty();
+    $("#notification-num").text("new notifications");
+    $("#tasks-list").empty();
 
     });
