@@ -110,7 +110,117 @@ $(function () {
     $("#customerTableBody").empty();
     $("#system-status-list").empty();
     $("#notifications-list").empty();
-    $("#notification-num").text("new notifications");
     $("#tasks-list").empty();
+    $("#notification-num").empty();
+
+    $("#username").text(username);
+    $(".revenue-amt").text(revenueAmt);
+    $("#customer-num").text(customerNum);
+    $("#orders-amt").text(ordersAmt);
+    $("#issues-amt").text(issuesAmt);
+
+    function renderSales() {
+        const $salesBody = $("#salesTableBody");
+
+        sales.forEach((item) => {
+            const $row = $("<tr>");
+            $row.append($("<td>").text(item.product));
+            $row.append($("<td>").text(item.quantity));
+            $row.append($("<td>").text(item.revenue));
+            $salesBody.append($row);
+        });
+    }
+
+    function renderActivities() {
+        const $activityList = $("#activity-list");
+
+        activities.forEach((item) => {
+            $activityList.append($("<li>").text(item.message));
+        });
+    }
+
+    function renderCustomers() {
+        const $customerBody = $("#customerTableBody");
+
+        customers.forEach((customer) => {
+            const statusClass = customer.status === "Active" ? "status-active" : "status-pending";
+            const $row = $("<tr>");
+
+            $row.append($("<td>").text(customer.name));
+            $row.append($("<td>").text(customer.email));
+            $row.append($("<td>").append($("<span>").addClass(`status ${statusClass}`).text(customer.status)));
+            $row.append($("<td>").text(customer.joined));
+
+            $customerBody.append($row);
+        });
+    }
+
+    function renderSystemStatus() {
+        const $statusList = $("#system-status-list");
+
+        messages.forEach((item) => {
+            $statusList.append($("<li>").text(item.messsage));
+        });
+    }
+
+    function renderNotifications() {
+        const $notificationList = $("#notifications-list");
+
+        notifications.forEach((item) => {
+            $notificationList.append($("<li>").text(item.messsage));
+        });
+
+        $("#notification-num").text(notifAmt);
+    }
+
+    function renderTasks() {
+        const $taskList = $("#tasks-list");
+
+        tasks.forEach((item) => {
+            $taskList.append($("<li>").text(item.messsage));
+        });
+    }
+
+    renderSales();
+    renderActivities();
+    renderCustomers();
+    renderSystemStatus();
+    renderNotifications();
+    renderTasks();
+
+    $("button").button();
+    $("#dashboardTabs").tabs();
+    $("#accordion").accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    $("#customerDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        width: 450,
+        buttons: {
+            "Create Customer": function () {
+                var name = $("#customerName").val();
+                var email = $("#customerEmail").val();
+                if (!name || !email) {
+                    alert("Please enter a name and email.");
+                    return;
+                }
+                alert("Customer created: " + name);
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#newCustomerButton").on("click", function () {
+        $("#customerDialog").dialog("open");
+    });
+
+    $("#customerDate").datepicker({
+        dateFormat: "mm/dd/yy"
+    });
 
     });
